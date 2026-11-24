@@ -1,15 +1,28 @@
 from pygame import *   
 import sounddevice as sd 
+from scipy.io.wavfile import wav
 
 # === Налаштування ===
 fs = 44100     # Частота дискретизації (кількість вимірів за секунду)
 chunk = 1024   # Кількість семплів (відліків) за один кадр
 width, height = 800, 400  
 
+recording = None
+is_recording = False
+voice_file = "voice.wav"
+minus_track = "MinusDuHast.mp3"
+
 init()
 screen = display.set_mode((width, height))
 display.set_caption("Live Audio (Mic)")
 clock = time.Clock()
+
+font.init()
+font_big = font.SysFont("Arial", 35)
+
+btn_rect = Rect(425, 280, 250, 80)
+rect_color = "white"
+btn_text = "Record"
 
 # Початкові дані — масив нулів (ще немає звуку)
 data = [0.0] * chunk
